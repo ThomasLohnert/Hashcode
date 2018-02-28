@@ -24,7 +24,7 @@ class PizzaSlicer:
 
         self.num_m = len(self.model[self.model == 0])
         self.num_t = len(self.model[self.model == 1])
-        
+
         self.f.close()
 
     def parse_file(self):
@@ -48,6 +48,34 @@ class PizzaSlicer:
             out.write("{0} {1} {2} {3}\n".format(slice.start_row, slice.start_col, slice.end_row, slice.end_col))
 
         out.close()
+
+    def cut(self, pizza):
+        row, col = pizza.shape
+
+        if row < col:
+            idx = col / 2
+        else:
+            idx = row / 2
+
+        left, right = self.create_slices(pizza, idx, row < col)
+
+        if self.check_ingredients(left) and self.check_ingredients(right):
+            self.compare_slice(left, right)
+
+
+    def create_slices(self, pizza, idx, is_row):
+        if is_row:
+            return pizza[:idx, :], pizza[idx:, :]
+        else:
+            return pizza[:, :idx], pizza[:, idx:]
+
+    def check_ingredients(self, slice):
+        true_size = len(slice[slice==1])
+        false_size = slice.size - true_size
+        return true_size >= self.min_ingredients \
+               and false_size >= self.min_ingredients
+
+    def compare_slice(self, left, right):
 
 
 slicer = PizzaSlicer("example.in")
