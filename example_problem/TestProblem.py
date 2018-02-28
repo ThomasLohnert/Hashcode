@@ -1,3 +1,11 @@
+class Slice:
+    def __init__(self, start_row, start_col, end_row, end_col):
+        self.start_row = start_row
+        self.start_col = start_col
+        self.end_row = end_row
+        self.end_col = end_col
+
+
 class PizzaSlicer:
 
     def __init__(self, file_path):
@@ -9,6 +17,7 @@ class PizzaSlicer:
         self.min_ingredients = int(params[2])
         self.max_slice = int(params[3])
         self.model = self.parse_file()
+        self.f.close()
 
     def parse_file(self):
         lines = self.f.readlines()
@@ -24,8 +33,18 @@ class PizzaSlicer:
             i += 1
         return matrix
 
+    def write_file(self, slices):
+        out = open("output.txt", "w+")
+        out.write("{}\n".format(len(slices)))
+        for slice in slices:
+            out.write("{0} {1} {2} {3}\n".format(slice.start_row, slice.start_col, slice.end_row, slice.end_col))
+
+        out.close()
+
+
 slicer = PizzaSlicer("example.in")
 print("rows {}".format(slicer.rows))
 print("cols {}".format(slicer.cols))
 print("min in {}".format(slicer.min_ingredients))
 print("slice size {}".format(slicer.max_slice))
+
