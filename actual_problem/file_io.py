@@ -1,16 +1,25 @@
 from actual_problem.ride import Ride
 
+
 def read_input(file_name):
     """
-    Reads in an input file and returns a creates a list of ride objects.
+    Reads in an input file and returns: a list of ride objects.
+    row, column, vehicle, bonus, steps, list of rides
     """
     with open(file_name) as f:
         rows, columns, vehicles, rides, bonus, steps = f.readline().split()
 
-        rides = list()
-
         lines = f.readlines()
         assert(len(lines) == rides)
-        for line in lines:
-            rides.append(Ride())
-        return matrix
+
+        rides = parse_rides(lines)
+
+        return rows, columns, vehicles, bonus, steps, rides
+
+
+def parse_rides(lines):
+    rides = list()
+    for line in lines:
+        values = line.split()
+        rides.append(Ride((values[0], values[1]), (values[2], values[3]), values[4], values[5]))
+    return rides
