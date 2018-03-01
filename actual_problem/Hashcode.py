@@ -1,10 +1,6 @@
 import numpy as np
 import matplotlib
 
-class Ride:
-    def __init__(self, start_pos, end_pos, start_time, end_time ):
-        self.start_pos =
-
 class RideScheduler:
 
     def __init__(self, file_path):
