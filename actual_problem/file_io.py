@@ -32,9 +32,15 @@ def write_output(file_name, vehicles):
     Writes a list of vehicles as a solution file
     """
     with open(file_name) as f:
+        f.write(_parse_vehicles(vehicles))
 
 
-def parse_vehicle(vehicles):
+def _parse_vehicles(vehicles):
+    out = list()
     for v in vehicles:
-
+        out_str = ""
+        out_str += v.id + " "
         for job in v.jobs:
+            out_str += job.id + " "
+        out.append(out_str[:-1])
+    return out
