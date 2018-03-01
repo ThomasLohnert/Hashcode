@@ -30,6 +30,8 @@ def write_output(file_name, vehicles):
     Writes a list of vehicles as a solution file
     """
     with open(file_name) as f:
+        pass
 
 
 def parse_vehicles(vehicles):
+    pass
