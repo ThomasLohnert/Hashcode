@@ -8,3 +8,4 @@ for dataset in ["a.in", "b.in", "c.in", "d.in", "e.in"]:
 
     vehicles = scheduler.assign_jobs()
     file_io.write_output(dataset + ".txt", vehicles)
+    print("finished dataset " + dataset)

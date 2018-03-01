@@ -32,7 +32,10 @@ class RideScheduler:
                 if len(self.rides) == 0:
                     break
                 r = self.filter_impossible(v)
-                v.update(r)
+                if r is None:
+                    v.update(self.rides.pop(0))
+                else:
+                    v.update(r)
 
         return self.vehicle_list
 
