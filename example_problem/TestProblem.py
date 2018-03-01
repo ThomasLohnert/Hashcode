@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 class Slice:
     def __init__(self, start_row, start_col, end_row, end_col):
@@ -25,6 +26,10 @@ class PizzaSlicer:
         self.num_m = len(self.model[self.model == 0])
         self.num_t = len(self.model[self.model == 1])
 
+        self.slices = list()
+
+        self.cut(self.model)
+        print(self.slices)
         self.f.close()
 
     def parse_file(self):
@@ -49,25 +54,54 @@ class PizzaSlicer:
 
         out.close()
 
-    def cut(self, pizza):
+    def cut(self, pizza, top_left=(0, 0)):
+        print("cutting {}".format(top_left))
         row, col = pizza.shape
+        if pizza.size <= self.max_slice:
+            self.slices.append((top_left[0], top_left[1], top_left[0] + row, top_left[1] + col))
+            return
 
-        if row < col:
-            idx = col / 2
+        cutting_vert = row < col
+
+        if cutting_vert:
+            length = col
         else:
-            idx = row / 2
+            length = row
 
-        left, right = self.create_slices(pizza, idx, row < col)
+        centre = int(np.ceil(length / 2.0))
 
-        if self.check_ingredients(left) and self.check_ingredients(right):
-            self.compare_slice(left, right)
+        left, right = self.create_slices(pizza, centre, cutting_vert)
 
+        inverted = False
+        off = 1
+        idx = centre
+        while not(self.check_ingredients(left) and self.check_ingredients(right)):
+            idx = centre - off
+            print("cutting vertically: ", cutting_vert)
+            print("cutting at ", str(idx))
+            off = -(off + 1)
+            if idx >= length or idx < 0:
+                if inverted:
+                    print(top_left, " invalid")
+                    return
+                cutting_vert = not cutting_vert
+                inverted = True
+                off = 0
+                centre = int(np.ceil((col / 2.0 if cutting_vert else row / 2.0)))
+            left, right = self.create_slices(pizza, idx, cutting_vert)
 
-    def create_slices(self, pizza, idx, is_row):
-        if is_row:
-            return pizza[:idx, :], pizza[idx:, :]
+        if cutting_vert:
+            new_top = (top_left[0], top_left[1] + idx)
         else:
+            new_top = (top_left[0] + idx, top_left[1])
+        self.cut(left, top_left)
+        self.cut(right, new_top)
+
+    def create_slices(self, pizza, idx, is_vertical):
+        if is_vertical:
             return pizza[:, :idx], pizza[:, idx:]
+        else:
+            return pizza[:idx, :], pizza[idx:, :]
 
     def check_ingredients(self, slice):
         true_size = len(slice[slice==1])
@@ -76,9 +110,10 @@ class PizzaSlicer:
                and false_size >= self.min_ingredients
 
     def compare_slice(self, left, right):
+        ratio_left = left
 
 
-slicer = PizzaSlicer("example.in")
+slicer = PizzaSlicer("small.in")
 print("rows {}".format(slicer.rows))
 print("cols {}".format(slicer.cols))
 print("min in {}".format(slicer.min_ingredients))
