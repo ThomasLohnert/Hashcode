@@ -1,7 +1,7 @@
 import file_io
 from Hashcode import RideScheduler
 
-for dataset in ["a.in", "b.in", "c.in", "d.in", "e.in"]:
+for dataset in ["d.in"]:  #"a.in", "b.in", "c.in", "d.in", "e.in"]:
     f = file_io.read_input(dataset)
     scheduler = RideScheduler(*f)
     scheduler.sort_rides()

@@ -14,10 +14,12 @@ class RideScheduler:
         self.steps = steps
         self.rides = rides
 
+        self.rides = filter(lambda x: x.duration < 5000, self.rides)
+
         self.vehicle_list = [Vehicle(i) for i in range(self.num_v)]
 
     def sort_rides(self):
-        self.rides = sorted(self.rides, key=operator.attrgetter('start_time'))
+        self.rides = np.random.shuffle(self.rides)
 
     def assign_jobs(self):
 
