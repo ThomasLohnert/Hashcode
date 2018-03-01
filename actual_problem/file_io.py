@@ -18,10 +18,12 @@ def read_input(file_name):
 
 
 def _parse_rides(lines):
+    idx = 0
     rides = list()
     for line in lines:
         values = line.split()
-        rides.append(Ride((values[0], values[1]), (values[2], values[3]), values[4], values[5]))
+        rides.append(Ride(idx, (values[0], values[1]), (values[2], values[3]), values[4], values[5]))
+        idx += 1
     return rides
 
 
@@ -32,4 +34,7 @@ def write_output(file_name, vehicles):
     with open(file_name) as f:
 
 
-def parse_vehicles(vehicles):
+def parse_vehicle(vehicles):
+    for v in vehicles:
+
+        for job in v.jobs:
