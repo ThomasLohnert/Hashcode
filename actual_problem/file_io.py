@@ -10,11 +10,11 @@ def read_input(file_name):
         rows, columns, vehicles, rides, bonus, steps = f.readline().split()
 
         lines = f.readlines()
-        assert(len(lines) == rides)
+        assert(len(lines) == int(rides))
 
         rides = _parse_rides(lines)
 
-        return rows, columns, vehicles, bonus, steps, rides
+        return int(rows), int(columns), int(vehicles), int(bonus), int(steps), rides
 
 
 def _parse_rides(lines):
@@ -22,6 +22,7 @@ def _parse_rides(lines):
     rides = list()
     for line in lines:
         values = line.split()
+        values = map(int, values)
         rides.append(Ride(idx, (values[0], values[1]), (values[2], values[3]), values[4], values[5]))
         idx += 1
     return rides
@@ -31,16 +32,17 @@ def write_output(file_name, vehicles):
     """
     Writes a list of vehicles as a solution file
     """
-    with open(file_name) as f:
-        f.write(_parse_vehicles(vehicles))
+    with open(file_name, "w+") as f:
+        f.writelines(_parse_vehicles(vehicles))
 
 
 def _parse_vehicles(vehicles):
     out = list()
     for v in vehicles:
         out_str = ""
-        out_str += v.id + " "
+        out_str += str(len(v.jobs)) + " "
         for job in v.jobs:
-            out_str += job.id + " "
+            out_str += str(job.id) + " "
         out.append(out_str[:-1])
+        out.append("\n")
     return out

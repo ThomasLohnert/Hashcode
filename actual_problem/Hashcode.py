@@ -16,12 +16,12 @@ class RideScheduler:
         self.vehicle_list = [Vehicle(i) for i in range(self.num_v)]
 
     def assign_jobs(self):
-        num_rides = len(self.rides)
-        num_batches = num_rides / self.num_v
-
-        for v in self.vehicle_list:
-            i = v.id
-            v.jobs = self.rides[num_batches*i:num_batches*(i+1)]
+        while len(self.rides):
+            for v in self.vehicle_list:
+                if len(self.rides) == 0:
+                    break
+                r = self.rides.pop()
+                v.jobs.append(r)
 
         return self.vehicle_list
 

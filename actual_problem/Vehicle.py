@@ -3,7 +3,5 @@ class Vehicle:
         self.id = id
         self.jobs = []
 
-        self.rides = list()
-
     def move(self):
         pass
