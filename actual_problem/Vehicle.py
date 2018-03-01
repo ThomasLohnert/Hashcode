@@ -10,9 +10,8 @@ class Vehicle:
 
     def update(self, ride):
         self.jobs.append(ride)
-        self.time = self.time + self.calc_distance(self.last_pos, ride.start_pos) \
-                    + self.calc_distance(ride.start_pos, ride.end_pos)
+        self.time = self.time + self.calc_distance(self.last_pos, ride.start_pos) + ride.duration
         self.last_pos = ride.end_pos
 
     def calc_distance(self, start, end):
-        return abs(start[0] - end[0]) + abs(start[1] - end[0])
+        return abs(start[0] - end[0]) + abs(start[1] - end[1])
