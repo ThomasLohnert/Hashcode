@@ -18,3 +18,13 @@ class RideSchedulerTest(unittest.TestCase):
         rides = _parse_rides(["0 1 2 3 4 5"])
         self.assertTrue(isinstance(rides[0].start_pos, tuple))
         self.assertTrue(isinstance(rides[0].end_pos, tuple))
+
+    def test_given_10_lines_parse_returns_correct_idx(self):
+        rides = _parse_rides(["0 1 2 3 4 5"] * 10)
+        expected_idx = 0
+        for r in rides:
+            self.assertEqual(rides[expected_idx].id, expected_idx)
+            expected_idx += 1
+
+    def test_given_ride_returns(self):
+        pass
