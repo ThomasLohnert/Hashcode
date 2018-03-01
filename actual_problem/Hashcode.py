@@ -1,21 +1,18 @@
 import numpy as np
 import matplotlib
+import file_io
+from Vehicle import Vehicle
 
 class RideScheduler:
 
     def __init__(self, file_path):
-        self.f = open(file_path)
-        first_line = self.f.readline()
-        self.rows, self.cols, self.vehicles, self.rides = first_line.split(" ")
+        self.rows, self.columns, self.vehicles, self.bonus, self.steps, self.rides = file_io.read_input("b_should_be_easy.in")
+        self.vehicle_list = [Vehicle(i) for i in range(self.vehicles)]
 
-        self.cut(self.model)
-        print(self.slices)
-        self.f.close()
 
-    def write_result(self):
-        out = open("schedule.txt", "w+")
-
-        out.close()
+    def assign_jobs(self):
+        for v in self.vehicle_list:
+            pass
 
     def calc_distance(self, start, end):
         return abs(start[0]-end[0]) + abs(start[1]-end[0])
