@@ -1,4 +1,4 @@
-from actual_problem.ride import Ride
+from ride import Ride
 
 
 def read_input(file_name):

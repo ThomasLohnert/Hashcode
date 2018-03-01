@@ -17,7 +17,7 @@ class RideScheduler:
         self.vehicle_list = [Vehicle(i) for i in range(self.num_v)]
 
     def sort_rides(self):
-        self.rides = sorted(self.rides, key=operator.attrgetter('end_time'))
+        self.rides = sorted(self.rides, key=operator.attrgetter('start_time'))
 
     def assign_jobs(self):
 
@@ -40,9 +40,19 @@ class RideScheduler:
         return self.vehicle_list
 
     def filter_impossible(self, v):
+
+        possible_rides = []
         for i, ride in enumerate(self.rides):
             if ride.end_time > (v.time + self.calc_distance(v.last_pos, ride.start_pos) + ride.duration):
-                return self.rides.pop(i)
+                possible_rides.append((i, self.rides[i]))
+
+        if len(possible_rides) == 0:
+            return None
+
+        possible_rides = sorted(possible_rides, key=lambda r: self.calc_distance(r[1].start_pos, v.last_pos))
+        best_ride_index = possible_rides[0][0]
+        return self.rides.pop(best_ride_index)
+
 
     def calc_distance(self, start, end):
         return abs(start[0] - end[0]) + abs(start[1] - end[1])
