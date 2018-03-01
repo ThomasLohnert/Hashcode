@@ -12,14 +12,24 @@ def read_input(file_name):
         lines = f.readlines()
         assert(len(lines) == rides)
 
-        rides = parse_rides(lines)
+        rides = _parse_rides(lines)
 
         return rows, columns, vehicles, bonus, steps, rides
 
 
-def parse_rides(lines):
+def _parse_rides(lines):
     rides = list()
     for line in lines:
         values = line.split()
         rides.append(Ride((values[0], values[1]), (values[2], values[3]), values[4], values[5]))
     return rides
+
+
+def write_output(file_name, vehicles):
+    """
+    Writes a list of vehicles as a solution file
+    """
+    with open(file_name) as f:
+
+
+def parse_vehicles(vehicles):

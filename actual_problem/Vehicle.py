@@ -5,5 +5,7 @@ class Vehicle:
         self.occupied = None
         self.id = id
 
+        self.rides = list()
+
     def move(self):
         pass
