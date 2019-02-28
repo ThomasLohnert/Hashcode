@@ -8,7 +8,7 @@ def read_input(file_name):
         lines = f.readlines()
         lines = lines[1:]
         line_parts = [line.split() for line in lines]
-        line_parts = [(i, parts[0], parts[2:]) for i, parts in enumerate(line_parts)]
+        line_parts = [(i, parts[0], int(parts[1]), parts[2:]) for i, parts in enumerate(line_parts)]
         return line_parts
 
 
