@@ -9,6 +9,14 @@ def score_pair(left, right):
     r_diff = right_tags.difference(left_tags)
     return min([len(intersection), len(l_diff), len(r_diff)])
 
+def score_pair_tags_only(left_tags, right_tags):
+    left_tags = set(left_tags)
+    right_tags = set(right_tags)
+    intersection = left_tags.intersection(right_tags)
+    l_diff = left_tags.difference(right_tags)
+    r_diff = right_tags.difference(left_tags)
+    return min([len(intersection), len(l_diff), len(r_diff)])
+
 if __name__ == "__main__":
     a = (0, 'V', 3, ['dog', 'cat', 'turtle'])
     b = (0, 'V', 3, ['dog', 'cat', 'rabbit'])
