@@ -21,7 +21,9 @@ for dataset in datasets:
     vertical = list(filter(lambda item: item[1] == "V", photos))
     horizontal = filter(lambda item: item[1] == "H", photos)
     horizontal = list(map(lambda item: (item, ), horizontal))
-    vertical = pairing.pair(vertical)
+    averageH = pairing.findHAverage(horizontal)
+
+    vertical = pairing.pair(vertical, averageH)
 
     photos = sorting.sort(vertical + horizontal)
 
