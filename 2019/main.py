@@ -9,8 +9,7 @@ DEBUG = True
 def convert_to_slides(photos_tuples):
     out = []
     for photos in photos_tuples:
-        ids = [p[0] for p in photos]
-        out.append(ids)
+        out.append(photos[0])
     return out
 
 datasets = os.listdir("data")
@@ -20,7 +19,7 @@ for dataset in datasets:
 
     vertical = list(filter(lambda item: item[1] == "V", photos))
     horizontal = filter(lambda item: item[1] == "H", photos)
-    horizontal = list(map(lambda item: (item, ), horizontal))
+    horizontal = list(map(lambda item: ((item[0], ),) + item[1:], horizontal))
     averageH = pairing.findHAverage(horizontal)
 
     vertical = pairing.pair(vertical, averageH)

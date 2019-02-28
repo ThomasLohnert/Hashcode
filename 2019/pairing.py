@@ -23,10 +23,10 @@ def pair(vert_photos, averageH):
 def pair_single(p1,p2):
     #((id1,id2),v,tags
     tags = list(set().union(p1[3], p2[3]))
-    return ((p1[0], p2[0]), "V", len(tags), tags)
+    return (p1[0], p2[0]), "V", len(tags), tags
 
 def findHAverage(horiz_photos):
     total = 0
     for p in horiz_photos:
-        total +=p[0][2]
+        total +=p[2]
     return total/len(horiz_photos)
