@@ -8,13 +8,17 @@ def read_input(file_name):
         lines = f.readlines()
         lines = lines[1:]
         line_parts = [line.split() for line in lines]
-        line_parts = [(parts[1], parts[0], parts[2:]) for parts in line_parts]
+        line_parts = [(i, parts[0], parts[2:]) for i, parts in enumerate(line_parts)]
         return line_parts
 
 
-def write_output(file_name):
+def write_output(file_name, id_list):
     """
     Writes a list of vehicles as a solution file
     """
-    with open(file_name, "w+") as f:
-        f.writelines("")
+    with open(os.path.join("output/", file_name), "w+") as f:
+        f.write(str(len(id_list)))
+        f.write("\n")
+        for ids in id_list:
+                f.write(" ".join(map(str, ids)))
+                f.write("\n")
