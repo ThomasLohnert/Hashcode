@@ -12,7 +12,8 @@ def convert_to_slides(photos_tuples):
         out.append(photos[0])
     return out
 
-datasets = os.listdir("data")
+#datasets = os.listdir("data")
+datasets = ["e_shiny_selfies.txt"]
 
 for dataset in datasets:
     print("Started data set {}".format(dataset))

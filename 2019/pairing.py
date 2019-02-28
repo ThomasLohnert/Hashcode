@@ -1,4 +1,6 @@
-MAX_DIFF = 1.5
+import copy
+import random
+MAX_DIFF = 1
 
 def pair(vert_photos, averageH):
     """
@@ -6,6 +8,15 @@ def pair(vert_photos, averageH):
     :param photos: list[tuple] : [(idn, orientation, num_of_tags, tags)]
     :return: list[((),())] [((idn, orientation, num_of_tags, tags), (idn, orientation, num_of_tags, tags))]
     """
+
+    if averageH == 0:
+        random.shuffle(vert_photos)
+        first_hundred, vert_photos = vert_photos[:100], vert_photos[100:]
+        paired = []
+        while (first_hundred):
+            paired.append(pair_single(first_hundred.pop(), first_hundred.pop()))
+
+        averageH = findHAverage(paired)
 
     out = []
     print("num of verts: {}".format(len(vert_photos)))
@@ -46,4 +57,4 @@ def findHAverage(horiz_photos):
     if len(horiz_photos):
         return total/len(horiz_photos)
     else:
-        0
+        return 0
