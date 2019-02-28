@@ -1,3 +1,5 @@
+MAX_DIFF = 1.5
+
 def pair(vert_photos, averageH):
     """
     Takes a list of vertical photos and returns a paired list
@@ -6,6 +8,11 @@ def pair(vert_photos, averageH):
     """
 
     out = []
+    print("num of verts: {}".format(len(vert_photos)))
+
+    print ("Av is {}".format(averageH))
+
+    #vert_photos = sorted()
 
     while vert_photos:
         first = vert_photos.pop()
@@ -13,10 +20,16 @@ def pair(vert_photos, averageH):
         for second in vert_photos:
             paired = pair_single(first, second)
             sum = paired[2]
-            if abs(sum-averageH) < best[0]:
+            diff = abs(sum-averageH)
+            if diff < MAX_DIFF*averageH:
+                best = (sum - averageH, paired, second)
+                break
+            if diff < best[0]:
                 best = (sum-averageH, paired, second)
         vert_photos.remove(best[2])
         out.append(best[1])
+
+    print("Done verts")
 
     return out
 
@@ -26,7 +39,11 @@ def pair_single(p1,p2):
     return (p1[0], p2[0]), "V", len(tags), tags
 
 def findHAverage(horiz_photos):
+
     total = 0
     for p in horiz_photos:
         total +=p[2]
-    return total/len(horiz_photos)
+    if len(horiz_photos):
+        return total/len(horiz_photos)
+    else:
+        0

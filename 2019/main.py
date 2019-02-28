@@ -15,6 +15,7 @@ def convert_to_slides(photos_tuples):
 datasets = os.listdir("data")
 
 for dataset in datasets:
+    print("Started data set {}".format(dataset))
     photos = file_io.read_input(dataset)
 
     vertical = list(filter(lambda item: item[1] == "V", photos))
